@@ -4,7 +4,8 @@
     <div v-if="post">
       <h1>{{ post.title}} </h1>
       <p>{{ post.body }}</p>
-      <strong> User: {{ post.userId }}</strong>
+      <strong style="display: block; margin-bottom: 8px;"> User: {{ post.userId }}</strong>
+      <p style="font-size:18px; font-weight: bold;">Comments</p>
       <Comment v-for="comment in comments" :key="comment.id" :comment="comment" />
     </div>
     <nuxt-link style="text-decoration:none;" to="/posts">
