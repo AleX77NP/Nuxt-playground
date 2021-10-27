@@ -5,6 +5,7 @@
       <h1>{{ post.title}} </h1>
       <p>{{ post.body }}</p>
       <strong> User: {{ post.userId }}</strong>
+      <Comment v-for="comment in comments" :key="comment.id" :comment="comment" />
     </div>
     <nuxt-link style="text-decoration:none;" to="/posts">
       <button>Go Back</button>
@@ -14,12 +15,15 @@
 
 <script>
 import axios from 'axios'
+import Comment from '../../../components/Comment.vue'
 export default {
+  components: { Comment },
 
   data() {
     return {
       id: 0,
-      post: null
+      post: null,
+      comments: []
     }
   },
   async created() {
@@ -29,6 +33,9 @@ export default {
       console.log(response.data)
       this.post = response.data
       this.id = id
+      const commentsRes = await axios.get(`https://jsonplaceholder.typicode.com/comments?postId=${id}`)
+      this.comments = commentsRes.data
+
     }
     catch(e) {
       console.log(e)
